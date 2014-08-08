@@ -16,3 +16,9 @@
 //	return View::make('hello');
 //});
 Route::get('/', 'HomeController@showWelcome');
+Route::group(array('prefix' => 'admin'), function()
+{
+
+    Route::get('/', 'HomeAdmin@showWelcome');
+
+});

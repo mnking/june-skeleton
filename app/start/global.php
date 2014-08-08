@@ -13,11 +13,11 @@
 
 ClassLoader::addDirectories(array(
 
-	app_path().'/commands',
+//	app_path().'/commands',
 	app_path().'/controllers',
-//	app_path().'/models',
-	app_path().'/database/seeds',
-    app('path.june') .'/controllers',
+	app_path().'/cloud/controllers/admin',
+//	app_path().'/database/seeds',
+//    app('path.june') .'/controllers',
     app('path.june') .'/models',
     app('path.june') .'/core',
 
