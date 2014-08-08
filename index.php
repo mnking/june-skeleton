@@ -1,5 +1,4 @@
 <?php
-echo 'Sample';
 /**
  * Laravel - A PHP Framework For Web Artisans
  *
