@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'junev4',
+			'database'  => 'junecms',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

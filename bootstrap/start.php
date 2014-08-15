@@ -26,7 +26,8 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('homestead'),
+	'local' => array('vagrant-centos65-32'),
+    'production' => array('cent6.5')
 
 ));
 
