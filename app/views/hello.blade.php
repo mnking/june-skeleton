@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Laravel PHP Framework</title>
+    {{ June::getBootstrap() }}
 	<style>
 
 		body {
@@ -16,20 +17,14 @@
             margin: 200px auto;
 		}
 
-		a, a:visited {
-			text-decoration:none;
-		}
-
-		h1 {
-			font-size: 32px;
-			margin: 16px 0 0 0;
-		}
 	</style>
 </head>
 <body>
 	<div class="welcome">
 		<a href="#" title="June CMS"><img src="{{ June::asset('june.png') }}" alt="June CMS"></a>
-		<h1>You have June</h1>
+		<h1><label class="label label-default">Hello. I'm June</label></h1>
 	</div>
+    {{ June::getJquery() }}
+    {{ June::getBootstrap('script') }}
 </body>
 </html>
