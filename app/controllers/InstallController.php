@@ -3,11 +3,6 @@
 class InstallController extends BaseController {
 
     /**
-     * @var Path to june
-     */
-    public $sourceDir;
-
-    /**
      * @var Path to client update
      */
     public $destinationDir;
@@ -23,9 +18,14 @@ class InstallController extends BaseController {
     public $remotePath;
 
     /**
-     * @var Cloud update package infomation
+     * @var Cloud update package information
      */
     public $cloudInfo;
+
+    /**
+     * @var Package information
+     */
+    public $infoFile;
 
 
     /**
@@ -34,21 +34,53 @@ class InstallController extends BaseController {
     public function __construct()
     {
         $clientDir = 'cloud';
-        $this->sourceDir = app('path.cloud');
         $this->destinationDir = app_path($clientDir);
         $this->migratePath = 'sample/app/'.$clientDir.'/migrations';
         $this->remotePath = 'http://tp1club.com/juneupdate';
+        $this->infoFile = 'info.json';
     }
     public function install()
     {
 
     }
-	public function update()
+
+    /**
+     * Run update to application
+     */
+    public function update()
 	{
         if($this->checkUpdate()){
             $this->updateCloudToClient();
         }
 	}
+
+    public function checkInstallDatabase()
+    {
+        if(DB::connection()->getDatabaseName()){
+            $check = DB::select(DB::raw('SELECT COUNT(*) as cnt
+                FROM information_schema.tables
+                WHERE table_name IN ("cms")
+                AND table_schema = database()'));
+            if($check[0]->cnt)
+            {
+               if(CMS::storeGet('installed') == 1){
+                   return true;
+               }
+            }
+        }
+        return false;
+    }
+
+    public function checkInstallPackage()
+    {
+        $path = $this->destinationDir . $this->infoFile;
+        return File::exists($path);
+    }
+
+    public function completeInstall()
+    {
+        return View::make('install');
+    }
 
     /**
      * Check if has update. Check by version of cloud and client
@@ -81,13 +113,16 @@ class InstallController extends BaseController {
         return File::delete($fileNeedToDelete);
     }
 
+    /**
+     * Download update file,package info and extract it to client
+     */
     protected function updateCloudToClient()
     {
         $remoteFile = 'latest.zip';
         $saveAs = storage_path('tmp/' . $remoteFile);
         $this->downloadFile($remoteFile,$saveAs);
         Zipper::make($saveAs)->folder('cloud')->extractTo($this->destinationDir);
-        CMS::storePut('version',$this->getCloudVersion());
+        $this->downloadFile($this->infoFile,$this->destinationDir);
     }
 
     /**
@@ -95,7 +130,17 @@ class InstallController extends BaseController {
      *
      * @return mixed
      */
-    protected function runMysql()
+    protected function runMigrate()
+    {
+        return Artisan::call('migrate',array('--path'=>$this->migratePath));
+    }
+
+    /**
+     * Call Artisan to run seeder add sample data to database
+     *
+     * @return mixed
+     */
+    protected function runSeeder()
     {
         return Artisan::call('migrate',array('--path'=>$this->migratePath));
     }
