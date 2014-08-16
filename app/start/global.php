@@ -70,6 +70,41 @@ App::down(function()
 	return Response::make("Be right back!", 503);
 });
 
+/**
+ * Generate style and script tag to include Twitter Bootstrap
+ *
+ * @param string $type
+ * @return string
+ */
+HTML::macro('getBootstrap', function($type = 'css')
+{
+    switch ($type) {
+        case 'css':{
+            $echo = HTML::style('public/bootstrap/css/bootstrap.min.css');
+            $echo .= HTML::style('public/font-awesome/css/font-awesome.min.css');
+            break;
+        }
+        case 'script':
+            $echo = HTML::script('public/bootstrap/js/bootstrap.min.js');
+            break;
+        default:
+            $echo = '';
+            break;
+    }
+    return $echo;
+});
+
+/**
+ * Generate script tag to include Jquery
+ *
+ * @param string $name
+ * @return string
+ */
+HTML::macro('getJquery', function($name = 'jquery.min.js')
+{
+    return HTML::script('public/jquery/' . $name);
+});
+
 /*
 |--------------------------------------------------------------------------
 | Require The Filters File
