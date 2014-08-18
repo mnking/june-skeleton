@@ -15,7 +15,7 @@ ClassLoader::addDirectories(array(
 
 //	app_path().'/commands',
 	app_path().'/controllers',
-	app_path().'/cloud/controllers/admin',
+    app('path.system').'/controllers/admin',
 //	app_path().'/database/seeds',
 //    app('path.june') .'/controllers',
     app('path.june') .'/models',
@@ -103,6 +103,22 @@ HTML::macro('getBootstrap', function($type = 'css')
 HTML::macro('getJquery', function($name = 'jquery.min.js')
 {
     return HTML::script('public/jquery/' . $name);
+});
+
+/**
+ * Generate script tag to include public javascript file in public/js folder
+ */
+HTML::macro('js', function($name)
+{
+    return HTML::script('public/js/' . $name);
+});
+
+/**
+ * Generate script tag to include public css file in public/css folder
+ */
+HTML::macro('css', function($name)
+{
+    return HTML::script('public/css/' . $name);
 });
 
 /*

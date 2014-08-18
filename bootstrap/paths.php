@@ -56,6 +56,6 @@ return array(
 
     'june' => __DIR__.'/../../june',
 
-    'cloud' => __DIR__.'/../../june/cloud',
+    'system' => __DIR__.'/../app/system',
 
 );

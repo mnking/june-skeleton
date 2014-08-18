@@ -75,6 +75,7 @@
 		</div>
 	</div>
     {{ HTML::getJquery() }}
+    {{ HTML::js('test.js') }}
     {{ HTML::getBootstrap('script') }}
 </body>
 </html>

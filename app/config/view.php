@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'paths' => array(__DIR__.'/../views',__DIR__.'/../cloud/views'),
+	'paths' => array(__DIR__.'/../views',app('path.system').'/views'),
 
 	/*
 	|--------------------------------------------------------------------------

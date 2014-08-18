@@ -44,6 +44,11 @@ class InstallController extends BaseController {
 
     }
 
+    public function reInstall()
+    {
+
+    }
+
     /**
      * Run update to application
      */
@@ -57,24 +62,13 @@ class InstallController extends BaseController {
     public function checkInstallDatabase()
     {
         if(DB::connection()->getDatabaseName()){
-            $check = DB::select(DB::raw('SELECT COUNT(*) as cnt
-                FROM information_schema.tables
-                WHERE table_name IN ("cms")
-                AND table_schema = database()'));
-            if($check[0]->cnt)
-            {
+            if(Schema::hasTable('cms')){
                if(CMS::storeGet('installed') == 1){
                    return true;
                }
             }
         }
         return false;
-    }
-
-    public function checkInstallPackage()
-    {
-        $path = $this->destinationDir . $this->infoFile;
-        return File::exists($path);
     }
 
     public function completeInstall()
